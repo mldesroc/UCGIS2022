@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Ground-truthing forest disturbance detection algorithms with harvest records</title>
+
+<script src="UCGIS2022_files/header-attrs-2.14/header-attrs.js"></script>
+
+
+
+
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+<link href='https://fonts.googleapis.com/css?family=Rasa' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Rasa' rel='stylesheet'>
+
+<!--
+Here are the required style attributes for css to make this poster work :)
+-->
+<style>
+@page {
+size: 46in 32in;
+margin: 0;
+padding: 0;
+background-color: #ffffff;
+}
+body {
+margin: 0px;
+padding: 0px;
+width: 46in;
+height: 32in;
+text-align: justify;
+font-size: 45px;
+background-color: #FFFFFF;
+color: #000000;
+}
+/* RMarkdown Class Styles */
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+margin: auto;
+margin-top: 1em;
+margin-bottom: 1em;
+/* align-items: center; */
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+code {
+font-size: 25pt;
+font-family: monospace;
+background-color: #77912824;
+color: #1F3D1C;
+padding: 1.2mm;
+line-height: 1;
+border-radius: 2mm;
+}
+caption {
+margin-bottom: 10px;
+font-size: 20pt;
+font-style: italic;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #1F3D1C20;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  border-spacing: 0;
+  font-size: 40%;
+  border-style: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 1em;
+  padding-left: 1em;
+  line-height: 1em;
+}
+table {
+  margin: auto;
+}
+th {
+  padding-left: 5mm;
+  padding-right: 5mm;
+}
+.caption {
+font-size: 20pt;
+font-style: italic;
+padding-top: 0;
+}
+.references {
+font-size: 20px;
+line-height: 90%;
+}
+/* Create three unequal columns that floats next to each other */
+.column {
+float: left;
+padding: 0px;
+}
+.outer {
+width: 46in;
+height: 32in;
+-webkit-column-count: 2; /* Chrome, Safari, Opera */
+-moz-column-count: 2; /* Firefox */
+column-count: 2;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+-webkit-column-rule-width: 50%;
+-moz-column-rule-width: 50%;
+column-rule-width: 50%;
+-webkit-column-rule-style: solid;
+-moz-column-rule-style: solid;
+column-rule-style: solid;
+-webkit-column-rule-color: black;
+-moz-column-rule-color: black;
+column-rule-color: black;
+-webkit-column-gap: 50%;
+background-color: #ffffff;
+font-family: Rasa;
+color: #000000;
+}
+span.citation {
+  color: #779128;
+  font-weight: bold;
+}
+a {
+text-decoration: none;
+color: #779128;
+}
+#title {
+font-size: 45pt;
+text-align: left;
+margin: 0;
+line-height: 90%;
+border-bottom: 0;
+}
+#author {
+color: #1F3D1C;
+margin: 0;
+line-height: 90%;
+font-size: 1.17em;
+}
+#affiliation {
+padding-top: 1em;
+color: #00000060;
+font-style: italic;
+font-size: 25px;
+margin: 0;
+}
+sup {
+color: #B6C648;
+}
+.affiliation sup {
+font-size: 20px;
+}
+.author sup {
+font-size: 30px;
+}
+.author_extra {
+color: #779128;
+margin: 0;
+line-height: 85%;
+font-size: 35px;
+}
+.outer h1 {
+text-align: center;
+margin-top: 0.5in;
+margin-bottom: 0.5in;
+}
+.outer h2 {
+text-align: center;
+}
+.outer p {
+color: #000000;
+}
+.outer ol {
+text-align: left;
+}
+.main {
+width: calc(46in / 2);
+height: 32in;
+position: absolute;
+margin-left: calc(46in / 4);
+background-color: #1F3D1C;
+color: #B6C648;
+font-family: Rasa;
+background-image: linear-gradient(#1F3D1C 50%, #779128);
+}
+.main strong {
+color: #FFFFFF;
+}
+img.main-img-left {
+width: 20%;
+left: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+img.main-img-right {
+width: 18%;
+right: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+.main p {
+padding-top: 20%;
+font-size: 170px;
+text-align: left;
+}
+.fab {
+color: #00000060;
+font-size: 25px;
+}
+.twitter, i {
+color: #00000060;
+font-size: 35px;
+text-decoration: none;
+}
+a.email {
+text-decoration: none;
+color: #00000060;
+font-size: 35px;
+}
+.envelope {
+color: #00000060;
+font-size: 5px;
+text-decoration: none;
+}
+.poster_wrap {
+width: 46in;
+height: 32in;
+padding: 0cm;
+background-color: #ffffff;
+}
+span > #tab:mytable {
+  font-weight: bold;
+}
+.section {
+  padding-left: 10mm;
+  padding-right: 10mm;
+}
+.main p {
+  padding-left: 30mm;
+  padding-right: 30mm;
+}
+.main_pic {
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.orcid img {
+  width: 3%;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+<div class="column outer">
+<br>
+<div class="title section">
+<h1 id="title">Ground-truthing forest disturbance detection algorithms with harvest records</h1>
+<br>
+<h3 id="author" class="author">
+
+Madeleine Desrochers<sup> 1, <a class="orcid" href="https://orcid.org/0000-0003-4194-3577"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup><br>
+<a class="twitter" href="https://mobile.twitter.com/MadsDesrochers"><i class="fab fa-twitter"></i>&nbsp;&nbsp;@MadsDesrochers</a><br>
+
+<a class='envelope'><i class="fas fa-envelope"></i></a> <a href="mailto:mldesroc@syr.edu" class="email">mldesroc@syr.edu</a> <br>
+     </h3>
+
+<h5 id="author_extra" class="author_extra">
+ Wayne Trip<sup>2, <a class="orcid" href="https://orcid.org/0000-0002-9734-8729"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup>
+ Stephen Logan<sup>2</sup>
+ Eddie Bevilaqua<sup>1, <a class="orcid" href="https://orcid.org/0000-0003-0194-0531"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup>
+ Lucas Johnson<sup>3, <a class="orcid" href="https://orcid.org/0000-0002-7953-0260"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup>
+ Colin M. Beier<sup>1, <a class="orcid" href="https://orcid.org/0000-0003-2692-7296"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup>
+</h5>
+
+<p id="affiliation" class="affiliation">
+<sup>1</sup> Department of Sustainable Resources Management, State University of New York College of Environmental Science and Forestry (SUNY ESF)<br> <sup>2</sup> F &amp; W Forestry LLC<br> <sup>3</sup> Graduate Program in Environmental Science, SUNY ESF
+</p>
+
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Landscape scale forest monitoring tools are an essential part of the process of growing and sustaining forests as a natural climate solution. Pressure for landowners to conserve lands and sequester more carbon is only increasing as a result of statewide emissions targets. Regulatory measures and emissions markets, like forest certification programs, require monitoring and verification to ensure landowner compliance over time. Additionally, forest disturbance regimes in the Northern Forest are expected to shift and intensify due to insect pest outbreaks and extreme weather events. Therefore, there is an urgent need to create efficient and accurate monitoring tools that can provide timely and actionable information on how and where disturbance is taking place, both to understand its effects on forest ecosystem structure, functions, and services (including climate benefits) and to inform stewardship actions in response.</p>
+<p>Change detection algorithms based on satellite imagery can address this need but are largely untested for the forest types, disturbance regimes, and management practices of the US Northeast. Because of the role these types of tools will play in modern forest management, it is essential that these tools be designed with forests, forestry professionals and landowners in mind.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p>Harvest records from 43,000 hectares of working forests in the Adirondack Park region were compared to outputs from three of the most commonly implemented disturbance detection algorithms - Continuous Change Detection and Classification (CCDC), Landtrendr (LT-GEE), and Landscape Change Monitoring System (LCMS) - using a raster based GIS overlay analysis. The overall accuracy of each algorithm was calculated, as well each algorithms accuracy at detecting common harvest prescriptions. Finally, for the algorithms that provided estimates of disturbance magnitude, those estimates were used to model the pulpwood removals from each harvest.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div class="figure">
+<img src="Fig2.png" alt="" />
+<p class="caption"><em>Figure 1. Maps showing date of most reccent disturbance for subset of study area. Inset map next to legend shows examples of parcel boundaries, harvest units and a two-lane highway (NYS Route 28N).</em></p>
+</div>
+<p><img src="Table2.png" alt="Table 1. Harvest detection performance based on a combined confusion matrix that includes results for three algorithms compared against the same harvest records. Values given are percentages of pixels calculated for each algorithm’s outputs separately." />
+<img src="Fig6.png" alt="Figure 4. Mean percentage of harvest area detected by harvest type for each algorithm. Comparison of means was done within each harvest type based on Tukey’s HSD. Error bars represent ±1 SE, and significant differences among means (P &lt; 0.05) are indicated by different lower case letters." /></p>
+<div class="figure">
+<img src="Fig7.png" alt="" />
+<p class="caption"><em>Figure 5. Least squared regression analysis between disturbance magnitudes and harvest intensity. Pixel magnitudes were summed for each harvest polygon and regressed against pulpwood volumes; all data were log-transformed prior to model fitting.</em></p>
+</div>
+</div>
+
+</div>
+<div class="main">
+<p>Change detection algorithms <strong>underpreform</strong> in the <strong>Northern Forest region</strong>, but there is ample potential for <strong>improvement</strong>.<br><br> <img src="canopy.png" class="main_pic" /></p>
+<img src="GTFC_code.png" class="main-img-left" />
+<img src="cafri_logo.jpeg" class="main-img-right" />
+</div>
+</div>
+
+
+
+</body>
+</html>
