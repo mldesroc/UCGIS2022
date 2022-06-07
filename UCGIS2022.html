@@ -8,7 +8,7 @@
 
 
 
-<title>Ground-truthing forest disturbance detection algorithms with harvest records</title>
+<title>UCGIS2022.knit</title>
 
 <script src="UCGIS2022_files/header-attrs-2.14/header-attrs.js"></script>
 
@@ -158,7 +158,7 @@ text-decoration: none;
 color: #779128;
 }
 #title {
-font-size: 45pt;
+font-size: 125pt;
 text-align: left;
 margin: 0;
 line-height: 90%;
@@ -290,8 +290,6 @@ span > #tab:mytable {
 <div class="column outer">
 <br>
 <div class="title section">
-<h1 id="title">Ground-truthing forest disturbance detection algorithms with harvest records</h1>
-<br>
 <h3 id="author" class="author">
 
 Madeleine Desrochers<sup> 1, <a class="orcid" href="https://orcid.org/0000-0003-4194-3577"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a></sup><br>
@@ -315,21 +313,24 @@ Madeleine Desrochers<sup> 1, <a class="orcid" href="https://orcid.org/0000-0003-
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Landscape scale forest monitoring tools are an essential part of the process of growing and sustaining forests as a natural climate solution. Pressure for landowners to conserve lands and sequester more carbon is only increasing as a result of statewide emissions targets. Regulatory measures and emissions markets, like forest certification programs, require monitoring and verification to ensure landowner compliance over time. Additionally, forest disturbance regimes in the Northern Forest are expected to shift and intensify due to insect pest outbreaks and extreme weather events. Therefore, there is an urgent need to create efficient and accurate monitoring tools that can provide timely and actionable information on how and where disturbance is taking place, both to understand its effects on forest ecosystem structure, functions, and services (including climate benefits) and to inform stewardship actions in response.</p>
+<p>Landscape scale forest monitoring tools are an essential part of the process of growing and sustaining forests as a natural climate solution. Regulatory measures and emissions markets, like forest certification programs, require monitoring and verification to ensure landowner compliance over time. Additionally, forest disturbance regimes in the Northern Forest are expected to shift and intensify due to insect pest outbreaks and extreme weather events. Therefore, there is an urgent need to create efficient and accurate monitoring tools that can provide timely and actionable information on how and where disturbance is taking place, both to understand its effects on forest ecosystem structure, functions, and services (including climate benefits) and to inform stewardship actions in response.</p>
 <p>Change detection algorithms based on satellite imagery can address this need but are largely untested for the forest types, disturbance regimes, and management practices of the US Northeast. Because of the role these types of tools will play in modern forest management, it is essential that these tools be designed with forests, forestry professionals and landowners in mind.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
 <p>Harvest records from 43,000 hectares of working forests in the Adirondack Park region were compared to outputs from three of the most commonly implemented disturbance detection algorithms - Continuous Change Detection and Classification (CCDC), Landtrendr (LT-GEE), and Landscape Change Monitoring System (LCMS) - using a raster based GIS overlay analysis. The overall accuracy of each algorithm was calculated, as well each algorithms accuracy at detecting common harvest prescriptions. Finally, for the algorithms that provided estimates of disturbance magnitude, those estimates were used to model the pulpwood removals from each harvest.</p>
-</div>
-<div id="results" class="section level1">
-<h1>Results</h1>
 <div class="figure">
 <img src="Fig2.png" alt="" />
 <p class="caption"><em>Figure 1. Maps showing date of most reccent disturbance for subset of study area. Inset map next to legend shows examples of parcel boundaries, harvest units and a two-lane highway (NYS Route 28N).</em></p>
 </div>
-<p><img src="Table2.png" alt="Table 1. Harvest detection performance based on a combined confusion matrix that includes results for three algorithms compared against the same harvest records. Values given are percentages of pixels calculated for each algorithm’s outputs separately." />
-<img src="Fig6.png" alt="Figure 4. Mean percentage of harvest area detected by harvest type for each algorithm. Comparison of means was done within each harvest type based on Tukey’s HSD. Error bars represent ±1 SE, and significant differences among means (P &lt; 0.05) are indicated by different lower case letters." /></p>
+<div class="figure">
+<img src="Table2.png" alt="" />
+<p class="caption"><em>Table 1. Harvest detection performance based on a combined confusion matrix that includes results for three algorithms compared against the same harvest records.</em></p>
+</div>
+<div class="figure">
+<img src="Fig6.png" alt="" />
+<p class="caption"><em>Figure 4. Mean percentage of harvest area detected by harvest type for each algorithm. Comparison of means was done within each harvest type based on Tukey’s HSD. Error bars represent ±1 SE, and significant differences among means (P &lt; 0.05) are indicated by different lower case letters.</em></p>
+</div>
 <div class="figure">
 <img src="Fig7.png" alt="" />
 <p class="caption"><em>Figure 5. Least squared regression analysis between disturbance magnitudes and harvest intensity. Pixel magnitudes were summed for each harvest polygon and regressed against pulpwood volumes; all data were log-transformed prior to model fitting.</em></p>
@@ -338,7 +339,7 @@ Madeleine Desrochers<sup> 1, <a class="orcid" href="https://orcid.org/0000-0003-
 
 </div>
 <div class="main">
-<p>Change detection algorithms <strong>underpreform</strong> in the <strong>Northern Forest region</strong>, but there is ample potential for <strong>improvement</strong>.<br><br> <img src="canopy.png" class="main_pic" /></p>
+<p><strong>Change detection algorithms under-perform</strong> in the Northern Forest, but <strong>we can do better</strong>.<br><br> <img src="canopy.png" class="main_pic" /></p>
 <img src="GTFC_code.png" class="main-img-left" />
 <img src="cafri_logo.jpeg" class="main-img-right" />
 </div>
